@@ -4,19 +4,20 @@ public abstract class Fish extends AbstractAnimal {
     private double gillVolume;
 
 
-    protected Fish(double gillVolume) {
-        this.gillVolume = gillVolume;
-    }
-    protected Fish(String breed, String name, Double cost, String character,double gillVolume){
-        super(breed,name,cost,character);
+    public Fish(double gillVolume) {
         this.gillVolume = gillVolume;
     }
 
-    protected void setGillVolume(double gillVolume) {
+    public Fish(String breed, String name, Double cost, String character, double gillVolume) {
+        super(breed, name, cost, character);
         this.gillVolume = gillVolume;
     }
 
-    protected double getGillVolume() {
+    public void setGillVolume(double gillVolume) {
+        this.gillVolume = gillVolume;
+    }
+
+    public double getGillVolume() {
         return gillVolume;
     }
 }

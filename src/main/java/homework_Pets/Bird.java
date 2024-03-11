@@ -4,12 +4,13 @@ public abstract class Bird extends AbstractAnimal {
     private Double wingspan;
     private Double beakSize;
 
-    protected Bird(Double wingspan, Double beakSize){
+    public Bird(Double wingspan, Double beakSize) {
         this.wingspan = wingspan;
         this.beakSize = beakSize;
     }
-    protected Bird(String breed, String name, Double cost, String character, Double wingspan, Double beakSize){
-        super(breed,name,cost,character);
+
+    public Bird(String breed, String name, Double cost, String character, Double wingspan, Double beakSize) {
+        super(breed, name, cost, character);
         this.wingspan = wingspan;
         this.beakSize = beakSize;
     }
@@ -22,11 +23,11 @@ public abstract class Bird extends AbstractAnimal {
         return beakSize;
     }
 
-    protected void setWingspan(Double wingspan) {
+    public void setWingspan(Double wingspan) {
         this.wingspan = wingspan;
     }
 
-    protected void setBeakSize(Double beakSize) {
+    public void setBeakSize(Double beakSize) {
         this.beakSize = beakSize;
     }
 }

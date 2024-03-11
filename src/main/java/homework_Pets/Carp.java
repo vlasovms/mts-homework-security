@@ -1,10 +1,10 @@
 package homework_Pets;
 
-public class Carp extends Fish{
+public class Carp extends Fish {
     private String lure;
 
     public Carp(String breed, String name, Double cost, String character, double gillVolume, String lure) {
-        super(breed,name,cost,character,gillVolume);
+        super(breed, name, cost, character, gillVolume);
         this.lure = lure;
     }
 
@@ -15,8 +15,9 @@ public class Carp extends Fish{
     public String getLure() {
         return lure;
     }
+
     @Override
-    public String toString(){
+    public String toString() {
         return "Fish: " +
                 " breed: " + this.breed + "; " +
                 " name: " + this.name + "; " +

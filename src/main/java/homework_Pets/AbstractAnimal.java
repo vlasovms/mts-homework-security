@@ -1,5 +1,7 @@
 package homework_Pets;
 
+import java.util.Random;
+
 public abstract class AbstractAnimal implements Animal {
     protected String breed;
     protected String name;
@@ -36,20 +38,31 @@ public abstract class AbstractAnimal implements Animal {
         return character;
     }
 
-    protected void setBreed(String breed) {
+    public void setBreed(String breed) {
         this.breed = breed;
     }
 
-    protected void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    protected void setCost(Double cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 
-    protected void setCharacter(String character) {
+    public void setCharacter(String character) {
         this.character = character;
     }
 
+    public static void createRandomAnimal() {
+        Random random = new Random();
+        switch (random.nextInt(2)) {
+            case 0:
+                System.out.println(new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID()));
+                break;
+            case 1:
+                System.out.println(new Carp(Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 11.0), Randomizer.generateUUID()));
+                break;
+        }
+    }
 }

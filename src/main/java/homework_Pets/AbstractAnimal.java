@@ -1,21 +1,23 @@
 package homework_Pets;
 
-import java.util.Random;
+import java.time.LocalDate;
 
 public abstract class AbstractAnimal implements Animal {
     protected String breed;
     protected String name;
     protected Double cost;
     protected String character;
+    protected LocalDate birthDate;
 
-    protected AbstractAnimal() {
+    public AbstractAnimal() {
     }
 
-    protected AbstractAnimal(String breed, String name, Double cost, String character) {
+    public AbstractAnimal(String breed, String name, Double cost, String character, LocalDate birthDate) {
         this.breed = breed;
         this.name = name;
         this.cost = cost;
         this.character = character;
+        this.birthDate = birthDate;
     }
 
     @Override
@@ -38,6 +40,11 @@ public abstract class AbstractAnimal implements Animal {
         return character;
     }
 
+    @Override
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
     public void setBreed(String breed) {
         this.breed = breed;
     }
@@ -54,15 +61,4 @@ public abstract class AbstractAnimal implements Animal {
         this.character = character;
     }
 
-    public static void createRandomAnimal() {
-        Random random = new Random();
-        switch (random.nextInt(2)) {
-            case 0:
-                System.out.println(new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID()));
-                break;
-            case 1:
-                System.out.println(new Carp(Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 11.0), Randomizer.generateUUID()));
-                break;
-        }
-    }
 }

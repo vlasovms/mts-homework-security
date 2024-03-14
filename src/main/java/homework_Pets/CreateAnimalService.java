@@ -4,7 +4,8 @@ public interface CreateAnimalService {
     default void createAnimals() {
         int i = 0;
         while (i < 10) {
-            AbstractAnimal.createRandomAnimal();
+            CreateAnimalServiceImpl createAnimalService = new CreateAnimalServiceImpl();
+            createAnimalService.createAnimalOnCondition(i);
             i++;
         }
     }

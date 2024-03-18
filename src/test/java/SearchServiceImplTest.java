@@ -8,6 +8,7 @@ import java.io.PrintStream;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -57,19 +58,17 @@ class SearchServiceImplTest {
         assertThrows(InvalidAnimalException.class, () -> checkNotLeapYearAnimal(null));
     }
 
-    static ArrayList<AbstractAnimal> getTestAnimalNoLeapYear() {
-        ArrayList<AbstractAnimal> animalsList = new ArrayList<>();
-        animalsList.add(new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), new GregorianCalendar(2003, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
-        animalsList.add(new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), new GregorianCalendar(1987, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
-        animalsList.add(new Carp(Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 11.0), Randomizer.generateUUID(), new GregorianCalendar(2017, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
-        return animalsList;
+    static List<AbstractAnimal> getTestAnimalNoLeapYear() {
+        return List.of(
+                new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), new GregorianCalendar(2003, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()),
+                new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), new GregorianCalendar(1987, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()),
+                new Carp(Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 11.0), Randomizer.generateUUID(), new GregorianCalendar(2017, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
     }
 
-    static ArrayList<AbstractAnimal> getTestAnimalLeapYear() {
-        ArrayList<AbstractAnimal> animalsList = new ArrayList<>();
-        animalsList.add(new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), new GregorianCalendar(2004, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
-        animalsList.add(new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), new GregorianCalendar(1988, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
-        animalsList.add(new Carp(Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 11.0), Randomizer.generateUUID(), new GregorianCalendar(1980, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
-        return animalsList;
+    static List<AbstractAnimal> getTestAnimalLeapYear() {
+        return List.of(
+                new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), new GregorianCalendar(2004, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()),
+                new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), new GregorianCalendar(1988, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()),
+                new Carp(Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 11.0), Randomizer.generateUUID(), new GregorianCalendar(1980, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
     }
 }

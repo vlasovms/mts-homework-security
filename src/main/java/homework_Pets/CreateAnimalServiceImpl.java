@@ -4,7 +4,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
 
     public void createAnimals(int n) {
         for (int i = 0; i < n; i++) {
-            createAnimalOnCondition(i);
+            AbstractAnimal.createRandomAnimal();
         }
     }
 
@@ -12,7 +12,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
     public void createAnimals() {
         int i = 0;
         do {
-            createAnimalOnCondition(i);
+            AbstractAnimal.createRandomAnimal();
             i++;
         }
         while (i < 10);

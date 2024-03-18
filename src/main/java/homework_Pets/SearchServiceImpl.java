@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class SearchServiceImpl implements SearchService {
 
-    public void checkLeapYearAnimal(Animal animal) throws InvalidAnimalException, InvalidAnimalBirthDateException {
+    public void checkLeapYearAnimal(Animal animal) throws InvalidAnimalBirthDateException {
         if (animal == null) {
             throw new InvalidAnimalException("На вход пришёл некорректный объект животного " + new Date());
         }

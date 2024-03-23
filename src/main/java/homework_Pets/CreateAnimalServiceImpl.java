@@ -1,21 +1,17 @@
 package homework_Pets;
 
+import java.util.List;
+import java.util.Map;
+
 public class CreateAnimalServiceImpl implements CreateAnimalService {
 
-    public void createAnimals(int n) {
-        for (int i = 0; i < n; i++) {
-            AbstractAnimal.createRandomAnimal();
-        }
+    public Map<String, List<Animal>> createAnimals(int n) {
+        return AbstractAnimal.createRandomAnimalsMap();
     }
 
     @Override
-    public void createAnimals() {
-        int i = 0;
-        do {
-            AbstractAnimal.createRandomAnimal();
-            i++;
-        }
-        while (i < 10);
+    public Map<String, List<Animal>> createAnimals() {
+        return AbstractAnimal.createRandomAnimalsMap();
     }
 
     public AbstractAnimal createRandomCarp() {

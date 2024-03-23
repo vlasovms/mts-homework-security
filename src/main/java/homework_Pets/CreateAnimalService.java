@@ -1,11 +1,11 @@
 package homework_Pets;
 
+import java.util.List;
+import java.util.Map;
+
 public interface CreateAnimalService {
-    default void createAnimals() {
-        int i = 0;
-        while (i < 10) {
-            AbstractAnimal.createRandomAnimal();
-            i++;
-        }
+    default Map<String, List<Animal>> createAnimals() {
+        return AbstractAnimal.createRandomAnimalsMap();
+
     }
 }

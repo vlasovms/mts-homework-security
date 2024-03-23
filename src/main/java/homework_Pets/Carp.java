@@ -1,6 +1,7 @@
 package homework_Pets;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Carp extends Fish {
     private String lure;
@@ -19,6 +20,19 @@ public class Carp extends Fish {
 
     public String getLure() {
         return lure;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Carp carp = (Carp) o;
+        return Objects.equals(name, carp.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 
     @Override

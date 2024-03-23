@@ -5,8 +5,9 @@ import java.time.LocalDate;
 public abstract class Fish extends AbstractAnimal {
     private double gillVolume;
 
-    public Fish(){
+    public Fish() {
     }
+
     public Fish(double gillVolume) {
         this.gillVolume = gillVolume;
     }

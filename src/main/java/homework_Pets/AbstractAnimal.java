@@ -71,11 +71,11 @@ public abstract class AbstractAnimal implements Animal {
         int carpsCount = random.nextInt(30);
 
         for (int i = 0; i < eaglesCount; i++) {
-            eaglesList.add(new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateRandomBirthDate()));
+            eaglesList.add(AnimalFactory.createAnimal(AnimalTypes.EAGLE));
         }
 
         for (int i = 0; i < carpsCount; i++) {
-            carpList.add(new Carp(Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 11.0), Randomizer.generateUUID(), Randomizer.generateRandomBirthDate()));
+            carpList.add(AnimalFactory.createAnimal(AnimalTypes.CARP));
         }
 
         map.put("Eagle", eaglesList);
@@ -91,10 +91,10 @@ public abstract class AbstractAnimal implements Animal {
         for (int i = 0; i < animalCount; i++) {
             switch (random.nextInt(2)) {
                 case 0:
-                    animalList.add(new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateRandomBirthDate()));
+                    animalList.add(AnimalFactory.createAnimal(AnimalTypes.EAGLE));
                     break;
                 case 1:
-                    animalList.add(new Carp(Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 11.0), Randomizer.generateUUID(), Randomizer.generateRandomBirthDate()));
+                    animalList.add(AnimalFactory.createAnimal(AnimalTypes.CARP));
                     break;
             }
         }

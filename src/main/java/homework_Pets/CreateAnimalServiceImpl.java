@@ -15,11 +15,11 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
     }
 
     public AbstractAnimal createRandomCarp() {
-        return new Carp(Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 11.0), Randomizer.generateUUID(), Randomizer.generateRandomBirthDate());
+        return (AbstractAnimal) AnimalFactory.createAnimal(AnimalTypes.CARP);
     }
 
     public AbstractAnimal createRandomEagle() {
-        return new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateRandomBirthDate());
+        return (AbstractAnimal) AnimalFactory.createAnimal(AnimalTypes.EAGLE);
     }
 
     public void createAnimalOnCondition(int counter) {

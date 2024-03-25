@@ -1,63 +1,73 @@
 import homework_Pets.*;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.time.LocalDate;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.time.ZoneId;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AnimalsRepositoryImplTest {
+class SearchServiceImplTest {
+    private static final ByteArrayOutputStream output = new ByteArrayOutputStream();
 
-    @DisplayName("Тест проверяет, что в мапу попадают только животные родившиеся в високосный год")
-    @Test
-    public void findLeapYearNames() {
-        List<Animal> testAnimalList = getAnimalsPool();
-        AnimalRepository animalsRepository = new AnimalsRepositoryImpl();
-        Map<String, LocalDate> leapYearsAnimalMap = animalsRepository.findLeapYearNames(testAnimalList);
-        assertEquals(leapYearsAnimalMap.get("Carp Volodya"), new GregorianCalendar(1980, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-        assertEquals(leapYearsAnimalMap.get("Eagle Ben"), new GregorianCalendar(1988, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-        assertFalse(leapYearsAnimalMap.containsKey("Eagle John"));
+    @BeforeEach
+    public void setUpStreams() {
+        System.setOut(new PrintStream(output));
     }
 
-    @DisplayName("Тест проверяет, что в мапу попадают только животные, старше 30 лет")
-    @Test
-    public void findOlderAnimal() {
-        List<Animal> testAnimalList = getAnimalsPool();
-        AnimalRepository animalsRepository = new AnimalsRepositoryImpl();
-        Map<Animal, Integer> olderThan30AnimalMap = animalsRepository.findOlderAnimal(testAnimalList, 30);
-        assertTrue(olderThan30AnimalMap.containsKey(new Eagle(0.0, 0.0, "", "", "Ben", 0.0, "", new GregorianCalendar(1988, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate())));
-        assertFalse(olderThan30AnimalMap.containsKey(new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), "John", Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), new GregorianCalendar(2003, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate())));
-        assertTrue(olderThan30AnimalMap.containsKey(new Carp(Randomizer.generateUUID(), "Volodya", Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 11.0), Randomizer.generateUUID(), new GregorianCalendar(1980, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate())));
+    @AfterEach
+    public void cleanUpStreams() {
+        output.reset();
+        System.setOut(null);
     }
 
-    @DisplayName("Тест проверяет, что в кейсе, когда не найдено ни одного животного старше 100 лет, то в мапу запишется самый старший из них")
-    @Test
-    public void findOlderAnimalCheckOlder() {
-        List<Animal> testAnimalList = getAnimalsPool();
-        AnimalRepository animalsRepository = new AnimalsRepositoryImpl();
-        Map<Animal, Integer> olderThan30AnimalMap = animalsRepository.findOlderAnimal(testAnimalList, 100);
-        assertTrue(olderThan30AnimalMap.containsKey(new Carp(Randomizer.generateUUID(), "Volodya", Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 11.0), Randomizer.generateUUID(), new GregorianCalendar(1980, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate())));
+    @DisplayName("Тест проверяет корректность вывода сообщения в консоль для кейсов с НЕ високосным годом")
+    @ParameterizedTest
+    @MethodSource("getTestAnimalNoLeapYear")
+    void checkNotLeapYearAnimal(AbstractAnimal animal) throws InvalidAnimalBirthDateException {
+        SearchService searchService = new SearchServiceImpl();
+        searchService.checkLeapYearAnimal(animal);
+        assertEquals("Имя: " + animal.getName() + " не был рожден в високосный год\r\n", output.toString());
+    }
+
+    @DisplayName("Тест проверяет корректность вывода сообщения в консоль для кейсов с високосным годом")
+    @ParameterizedTest
+    @MethodSource("getTestAnimalLeapYear")
+    void checkLeapYearAnimal(AbstractAnimal animal) throws InvalidAnimalBirthDateException {
+        SearchService searchService = new SearchServiceImpl();
+        searchService.checkLeapYearAnimal(animal);
+        assertEquals("Имя: " + animal.getName() + " был рожден в високосный год\r\n", output.toString());
 
     }
 
-    @DisplayName("Тест проверяет, что в мапу записывается ожидаемое количество дублей животных")
+
+    @DisplayName("Тест проверяет, что в случае незаполненной даты рождения метод выкинет эксепшн InvalidAnimalBirthDateException")
     @Test
-    public void findDuplicate() {
-        List<Animal> testAnimalList = getAnimalsPool();
-        AnimalRepository animalsRepository = new AnimalsRepositoryImpl();
-        Map<String, Integer> olderThan30AnimalMap = animalsRepository.findDuplicate(testAnimalList);
-        assertEquals(2, (int) olderThan30AnimalMap.get("Eagle"));
-        assertEquals(1, (int) olderThan30AnimalMap.get("Carp"));
+    void checkInvalidAnimalBirthDateExceptionThrows() {
+        assertThrows(InvalidAnimalBirthDateException.class, () -> checkNotLeapYearAnimal(new Eagle()));
     }
 
-    static List<Animal> getAnimalsPool() {
+    @DisplayName("Тест проверяет, что метод выкинет InvalidAnimalException в случае, если объект пустой")
+    @Test
+    void checkInvalidAnimalExceptionThrows() {
+        assertThrows(InvalidAnimalException.class, () -> checkNotLeapYearAnimal(null));
+    }
+
+    static List<AbstractAnimal> getTestAnimalNoLeapYear() {
         return List.of(
-                new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), "John", Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), new GregorianCalendar(2003, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()),
-                new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), "Ben", Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), new GregorianCalendar(1988, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()),
-                new Carp(Randomizer.generateUUID(), "Volodya", Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 11.0), Randomizer.generateUUID(), new GregorianCalendar(1980, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+                new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), new GregorianCalendar(2003, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()),
+                new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), new GregorianCalendar(1987, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()),
+                new Carp(Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 11.0), Randomizer.generateUUID(), new GregorianCalendar(2017, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+    }
+
+    static List<AbstractAnimal> getTestAnimalLeapYear() {
+        return List.of(
+                new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), new GregorianCalendar(2004, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()),
+                new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), new GregorianCalendar(1988, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()),
+                new Carp(Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 11.0), Randomizer.generateUUID(), new GregorianCalendar(1980, 2, 25).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
     }
 }

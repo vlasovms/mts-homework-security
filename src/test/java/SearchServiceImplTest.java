@@ -6,7 +6,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 

@@ -1,6 +1,7 @@
 package homework_Pets;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Eagle extends Bird {
     private String democraticRoar;
@@ -29,5 +30,22 @@ public class Eagle extends Bird {
     @Override
     public String toString() {
         return "Eagle: " + " breed: " + this.breed + "; " + " name: " + this.name + "; " + " cost: " + this.cost + "; " + " character: " + this.character + "; " + " democraticRoar: " + this.democraticRoar + "; " + " wingspan: " + super.getWingspan() + "; " + " beakSize: " + super.getBeakSize() + " birthDate: " + super.getBirthDate();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        Eagle eagle = (Eagle) obj;
+        return Objects.equals(name, eagle.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

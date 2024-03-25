@@ -1,29 +1,25 @@
 package homework_Pets;
 
+import java.util.List;
+import java.util.Map;
+
 public class CreateAnimalServiceImpl implements CreateAnimalService {
 
-    public void createAnimals(int n) {
-        for (int i = 0; i < n; i++) {
-            AbstractAnimal.createRandomAnimal();
-        }
+    public Map<String, List<Animal>> createAnimals(int n) {
+        return AbstractAnimal.createRandomAnimalsMap();
     }
 
     @Override
-    public void createAnimals() {
-        int i = 0;
-        do {
-            AbstractAnimal.createRandomAnimal();
-            i++;
-        }
-        while (i < 10);
+    public Map<String, List<Animal>> createAnimals() {
+        return AbstractAnimal.createRandomAnimalsMap();
     }
 
     public AbstractAnimal createRandomCarp() {
-        return new Carp(Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 11.0), Randomizer.generateUUID(), Randomizer.generateRandomBirthDate());
+        return (AbstractAnimal) AnimalFactory.createAnimal(AnimalTypes.CARP);
     }
 
     public AbstractAnimal createRandomEagle() {
-        return new Eagle(Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateUUID(), Randomizer.generateRandomDouble(0.0, 111111.0), Randomizer.generateUUID(), Randomizer.generateRandomBirthDate());
+        return (AbstractAnimal) AnimalFactory.createAnimal(AnimalTypes.EAGLE);
     }
 
     public void createAnimalOnCondition(int counter) {

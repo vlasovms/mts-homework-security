@@ -1,7 +1,10 @@
-
 /.mvn/
 /resources/
 /target/
 /HELP.md
 /homework_Pets_maven.iml
 /.idea/
+mvnw.cmd
+/.mvn
+resources
+/src/test/resources

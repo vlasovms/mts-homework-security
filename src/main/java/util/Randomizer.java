@@ -1,4 +1,4 @@
-package homeworks_main;
+package util;
 
 import java.time.Instant;
 import java.time.LocalDate;

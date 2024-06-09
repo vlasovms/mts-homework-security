@@ -1,16 +1,25 @@
 package homeworks_main;
 
+import entity.Animal;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import service.AnimalService;
 
-import java.time.LocalDate;
-import java.util.Map;
+import java.util.List;
 
-@SpringBootApplication(scanBasePackages = {"config", "homeworks_main"})
+
+@SpringBootApplication(scanBasePackages = {"service"})
+@EnableJpaRepositories(basePackages = {"repository"})
+@EntityScan("entity")
 public class Main {
+    @Autowired
+    private AnimalService animalService;
 
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
@@ -19,13 +28,15 @@ public class Main {
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {
-            printLeapYearAnimalMap(ctx);
+            dbOperations(ctx);
         };
     }
 
-    private static void printLeapYearAnimalMap(ApplicationContext ctx) {
-        AnimalsRepositoryImpl animalRepository = (AnimalsRepositoryImpl) ctx.getBean(AnimalRepository.class);
-        Map<String, LocalDate> leapYearAnimalMap = animalRepository.getLeapYearAnimalMap();
-        System.out.println(leapYearAnimalMap);
+    private void dbOperations(ApplicationContext ctx) {
+        List<Animal> animallist = animalService.getAllAnimals();
+        animalService.deleteAnimal(animallist.get(0));
+        animalService.deleteAnimal(animallist.get(1));
+        animalService.deleteAnimal(animallist.get(2));
+        animalService.addAnimal(animallist.get(0));
     }
 }

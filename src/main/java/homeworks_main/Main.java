@@ -27,9 +27,7 @@ public class Main {
 
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-        return args -> {
-            dbOperations(ctx);
-        };
+        return args -> dbOperations(ctx);
     }
 
     private void dbOperations(ApplicationContext ctx) {

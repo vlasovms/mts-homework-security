@@ -6,13 +6,25 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.util.Map;
 
 @RestController
-@RequestMapping("test")
 public class TestController {
+
+    @GetMapping("/homepage")
+    public ModelAndView userSuccessfullyAuth() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("homepage");
+        return modelAndView;
+    }
+
+    @GetMapping("/admin")
+    public String helloAdmin() {
+        return "Hello, ger Administrator";
+    }
 
     @GetMapping("/hello")
     public String getHelloString(@RequestHeader(HttpHeaders.USER_AGENT) String agent) {
